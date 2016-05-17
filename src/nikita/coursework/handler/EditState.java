@@ -12,4 +12,5 @@ public class EditState extends AbstractState {
     public EditState(GVEDrawingPanel panel){
         super(panel);
     }
+
 }

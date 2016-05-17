@@ -15,7 +15,6 @@ public class GraphicVectorEditor {
             e.printStackTrace();
         }
 
-
         EventQueue.invokeLater(() -> {
             GVEFrame ex = new GVEFrame();
             ex.setVisible(true);

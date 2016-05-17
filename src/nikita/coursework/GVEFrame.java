@@ -37,7 +37,7 @@ public class GVEFrame extends JFrame {
     private static final int ZOOM_BAR_ITEM_HIGHT = TOP_BAR_HIGHT - 2*ZOOM_SPACER_HITGHT;
     private static final int ZOOM_BAR_ITEM_WIDTH = (int)(ZOOM_BAR_ITEM_HIGHT* 1.5);
 
-
+    private GVEDrawingPanel graphicsPanel;
 
     public GVEFrame(){
             initUI();
@@ -51,27 +51,27 @@ public class GVEFrame extends JFrame {
         setLayout(new BorderLayout(1, 1));
         createDrawinganel();
         createTopBar();
-        createRightBar();
+//        createRightBarRectabgle();
     }
 
-    private GVEDrawingPanel graphPanel;
+
 
     private void createDrawinganel() {
 
-        graphPanel = new GVEDrawingPanel();
+        graphicsPanel = new GVEDrawingPanel();
 
-        graphPanel.setBackground(DRAWING_PANEL_COLOR);
+        graphicsPanel.setBackground(DRAWING_PANEL_COLOR);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) screenSize.getWidth();
         int height = (int) screenSize.getHeight();
-        graphPanel.setPreferredSize(new Dimension(width, height));
+        graphicsPanel.setPreferredSize(new Dimension(width, height));
 
-        JScrollPane scroller = new JScrollPane(graphPanel);
+        JScrollPane scroller = new JScrollPane(graphicsPanel);
         scroller.setBorder(BorderFactory.createLineBorder(BORDER_COLOR));
 
         add(scroller, BorderLayout.CENTER);
-        graphPanel.setFocusable(true);
+        graphicsPanel.setFocusable(true);
     }
 
     private void createKeyBinding() {
@@ -84,10 +84,24 @@ public class GVEFrame extends JFrame {
          */
         JButton group = createTopBarButton("/images/group.png");
         JButton ungroup = createTopBarButton("/images/ungroup.png");
-        JButton edit = createStateButton("/images/edit.png", new EditState(graphPanel));
-        JButton line = createStateButton("/images/line.png", new LineState(graphPanel));
-        JButton rectangle = createStateButton("/images/rectangle.png", new RectangleState(graphPanel));
-        JButton oval = createStateButton("/images/oval.png", new OvalState(graphPanel));
+        JButton edit = createTopBarButton("/images/edit.png");
+        JButton brush = createTopBarButton("/images/brush.png");
+        brush.addActionListener(e -> {
+            graphicsPanel.setHandlerState(new BrushState(graphicsPanel));
+        });
+        JButton line = createTopBarButton("/images/line.png");
+        line.addActionListener(e -> {
+            graphicsPanel.setHandlerState(new LineState(graphicsPanel));
+        });
+        JButton rectangle = createTopBarButton("/images/rectangle.png");
+        rectangle.addActionListener(e -> {
+            graphicsPanel.setHandlerState(new RectangleState(graphicsPanel));
+            createRightBarRectabgle();
+        });
+        JButton oval = createTopBarButton("/images/oval.png");
+        oval.addActionListener(e -> {
+            graphicsPanel.setHandlerState(new OvalState(graphicsPanel));
+        });
 
         JButton zoomPlus = createZoomBarButton("/images/zoomplus.png");
         JButton zoomMinus = createZoomBarButton("/images/zoomminus.png");
@@ -101,7 +115,7 @@ public class GVEFrame extends JFrame {
         topBar.setPreferredSize(new Dimension(MIN_FRAME_WIDTH, TOP_BAR_HIGHT));
 
         /**
-         *  Adding of buttons
+         *  Adding buttons
          */
         topBar.add(Box.createRigidArea(new Dimension(SPACER_WIDTH, SPACER_HIGHT)));
         topBar.add(group);
@@ -109,6 +123,8 @@ public class GVEFrame extends JFrame {
         topBar.add(ungroup);
         topBar.add(Box.createRigidArea(new Dimension(SPACE_BETWEEN_MAIN_ELEMENTS, SPACER_HIGHT)));
         topBar.add(edit);
+        topBar.add(Box.createRigidArea(new Dimension(SPACER_WIDTH, SPACER_HIGHT)));
+        topBar.add(brush);
         topBar.add(Box.createRigidArea(new Dimension(SPACER_WIDTH, SPACER_HIGHT)));
         topBar.add(line);
         topBar.add(Box.createRigidArea(new Dimension(SPACER_WIDTH, SPACER_HIGHT)));
@@ -129,7 +145,7 @@ public class GVEFrame extends JFrame {
 
 
 
-    private  void createRightBar(){
+    private  void createRightBarRectabgle(){
         /**
          * Right panel init
          */
@@ -242,12 +258,6 @@ public class GVEFrame extends JFrame {
         toolBarButton.setFocusable(false);
         toolBarButton.setBorder(new LineBorder(BORDER_COLOR, 0));
         return toolBarButton;
-    }
-
-    private JButton createStateButton(String iconPath, AbstractState state) {
-        JButton button = createTopBarButton(iconPath);
-        button.addActionListener(e -> graphPanel.setHandlerState(state));
-        return button;
     }
 
     private JButton createZoomBarButton(String iconPath) {
