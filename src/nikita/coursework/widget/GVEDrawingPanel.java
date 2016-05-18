@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Rectangle2D;
+import java.util.*;
+import java.util.List;
 
 
 /**
@@ -19,7 +22,11 @@ import java.awt.event.MouseMotionListener;
  */
 public class GVEDrawingPanel extends JLayeredPane {
 
-    GVEComposite picture = new GVEComposite();
+   private GVEComposite picture = new GVEComposite();
+
+    private List<GVEShape> group = new ArrayList<>();
+
+    private Rectangle2D.Float frame = new Rectangle2D.Float();
 
     GVEShape tempShape;
 
@@ -63,18 +70,59 @@ public class GVEDrawingPanel extends JLayeredPane {
     public void addTempShape(){
         if (tempShape != null && !picture.getChilds().contains(this.tempShape)){
             picture.add(tempShape);
-            System.out.println("lol");
         }
-        System.out.println("lol1");
     }
 
     public void setTempShape(GVEShape shape) {
         this.tempShape = shape;
     }
 
+    public GVEComposite getPicture(){
+        return picture;
+    }
+
+
     public GVEShape getTempShape(){
         return this.tempShape;
     }
+
+    public List<GVEShape> getGroup(){
+        return group;
+    }
+
+    public GVEShape selectElement(int x, int y){
+        for(GVEShape shape: group)
+            if (shape.containsPoint(x, y))
+                return shape;
+        return null;
+    }
+
+    /**
+     * Sets rectangle of the selection frame.
+     *
+     * @param x      coordinate along X axis.
+     * @param y      coordinate along Y axis.
+     * @param width  of the rectangle.
+     * @param height of the rectangle.
+     */
+    public void setFrame(int x, int y, int width, int height) {
+        frame.setRect(x, y, width, height);
+        repaint();
+    }
+
+    /**
+     * Creates group from element in selection frame.
+     */
+    public void createGroup() {
+        group.clear();
+        for (GVEShape child : picture.getChilds()) {
+            if (frame.contains(child.getX(), child.getY())) {
+                group.add(child);
+            }
+        }
+        repaint();
+    }
+
 
 
     @Override

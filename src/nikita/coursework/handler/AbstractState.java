@@ -1,8 +1,10 @@
 package nikita.coursework.handler;
 
+import nikita.coursework.GVEFrame;
 import nikita.coursework.composite.GVEShape;
 import nikita.coursework.widget.GVEDrawingPanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,8 +19,11 @@ abstract public class AbstractState extends MouseAdapter {
 
     protected Integer mousePressedX, mousePressedY;
 
-    protected AbstractState(GVEDrawingPanel panel) {
+    protected AbstractState(GVEDrawingPanel panel, JPanel inspector) {
         this.panel = panel;
+        setEmptyPanel(inspector);
+        setInnerElements(inspector);
+        inspector.updateUI();
     }
 
     @Override
@@ -48,4 +53,15 @@ abstract public class AbstractState extends MouseAdapter {
         mousePressedY = null;
         this.panel.addTempShape();
     }
+
+    protected void setEmptyPanel(JPanel inspector){
+        inspector.removeAll();
+        inspector.setBackground(GVEFrame.BAR_COLOR);
+        inspector.setLayout(new BoxLayout(inspector, BoxLayout.PAGE_AXIS));
+        inspector.setPreferredSize(new Dimension(200, GVEFrame.MIN_FRAME_HEIGHT));
+        inspector.setBorder(BorderFactory.createLineBorder(GVEFrame.BORDER_COLOR));
+    }
+
+    protected abstract void setInnerElements(JPanel inspector);
+
 }

@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class GVERectangle extends GVEShape {
 
+    int borderThickness = 1;
 
     public GVERectangle(int posX, int posY, int width, int height) {
         super(posX, posY, width, height);
@@ -17,13 +18,18 @@ public class GVERectangle extends GVEShape {
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
-        Rectangle2D oval = new Rectangle2D.Float(x, y, width, height);
-        g2d.draw(oval);
+        Rectangle2D rect = new Rectangle2D.Float(x, y, width, height);
+        g2d.setStroke(new BasicStroke(borderThickness));
+        g2d.draw(rect);
         g2d.dispose();
     }
 
     @Override
     public void move(int x, int y) {
         //TODO: Implement
+    }
+
+    public void setBorderThickness(int thickness){
+        borderThickness = thickness;
     }
 }

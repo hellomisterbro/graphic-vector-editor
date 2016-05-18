@@ -4,6 +4,7 @@ import nikita.coursework.composite.GVELine;
 import nikita.coursework.composite.GVEShape;
 import nikita.coursework.widget.GVEDrawingPanel;
 
+import javax.swing.*;
 import java.awt.event.MouseEvent;
 
 /**
@@ -13,8 +14,8 @@ import java.awt.event.MouseEvent;
  */
 public class LineState extends AbstractState {
 
-    public LineState(GVEDrawingPanel panel) {
-        super(panel);
+    public LineState(GVEDrawingPanel panel, JPanel inspector) {
+        super(panel, inspector);
     }
 
     @Override
@@ -37,5 +38,10 @@ public class LineState extends AbstractState {
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
+    }
+
+    @Override
+    protected void setInnerElements(JPanel inspector) {
+
     }
 }

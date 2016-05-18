@@ -13,31 +13,32 @@ import javax.swing.border.*;
  */
 public class GVEFrame extends JFrame {
 
-    private static final int MIN_FRAME_WIDTH = 840;
-    private static final int MIN_FRAME_HEIGHT = 580;
+    public static final int MIN_FRAME_WIDTH = 900;
+    public static final int MIN_FRAME_HEIGHT = 580;
 
-    private static final int FRAME_WIDTH = MIN_FRAME_WIDTH ;
-    private static final int FRAME_HEIGHT = MIN_FRAME_HEIGHT;
+    public static final int FRAME_WIDTH = MIN_FRAME_WIDTH ;
+    public static final int FRAME_HEIGHT = MIN_FRAME_HEIGHT;
 
-    private static final Color DRAWING_PANEL_COLOR = new Color(241, 241, 241);
-    private static final Color BAR_COLOR = new Color(232, 232, 232);
-    private static final Color BORDER_COLOR = new Color(151, 151, 151);
+    public static final Color DRAWING_PANEL_COLOR = new Color(241, 241, 241);
+    public static final Color BAR_COLOR = new Color(232, 232, 232);
+    public static final Color BORDER_COLOR = new Color(151, 151, 151);
 
 
-    private static final int TOP_BAR_HIGHT = 80;
-    private static final int SPACER_HIGHT = 15;
-    private static final int SPACER_WIDTH = 5;
+    public static final int TOP_BAR_HIGHT = 80;
+    public static final int SPACER_HIGHT = 15;
+    public static final int SPACER_WIDTH = 5;
 
-    private static final int SPACE_BETWEEN_MAIN_ELEMENTS = 100;
+    public static final int SPACE_BETWEEN_MAIN_ELEMENTS = 100;
 
-    private static final int TOP_BAR_ITEM_HIGHT = TOP_BAR_HIGHT - 2*SPACER_HIGHT;
-    private static final int TOP_BAR_ITEM_WIDTH = (int)(TOP_BAR_ITEM_HIGHT* 1.6);
+    public static final int TOP_BAR_ITEM_HIGHT = TOP_BAR_HIGHT - 2*SPACER_HIGHT;
+    public static final int TOP_BAR_ITEM_WIDTH = (int)(TOP_BAR_ITEM_HIGHT* 1.6);
 
-    private static final int ZOOM_SPACER_HITGHT = 30;
-    private static final int ZOOM_BAR_ITEM_HIGHT = TOP_BAR_HIGHT - 2*ZOOM_SPACER_HITGHT;
-    private static final int ZOOM_BAR_ITEM_WIDTH = (int)(ZOOM_BAR_ITEM_HIGHT* 1.5);
+    public static final int ZOOM_SPACER_HITGHT = 30;
+    public static final int ZOOM_BAR_ITEM_HIGHT = TOP_BAR_HIGHT - 2*ZOOM_SPACER_HITGHT;
+    public static final int ZOOM_BAR_ITEM_WIDTH = (int)(ZOOM_BAR_ITEM_HIGHT* 1.5);
 
-    private GVEDrawingPanel graphicsPanel;
+    public GVEDrawingPanel graphicsPanel;
+    public JPanel inspector;
 
     public GVEFrame(){
             initUI();
@@ -49,14 +50,14 @@ public class GVEFrame extends JFrame {
         setMinimumSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
 
         setLayout(new BorderLayout(1, 1));
-        createDrawinganel();
+        createDrawingPanel();
         createTopBar();
-//        createRightBarRectabgle();
+        createRightBar();
     }
 
 
 
-    private void createDrawinganel() {
+    private void createDrawingPanel() {
 
         graphicsPanel = new GVEDrawingPanel();
 
@@ -85,23 +86,26 @@ public class GVEFrame extends JFrame {
         JButton group = createTopBarButton("/images/group.png");
         JButton ungroup = createTopBarButton("/images/ungroup.png");
         JButton edit = createTopBarButton("/images/edit.png");
+        edit.addActionListener(e -> {
+            graphicsPanel.setHandlerState(new EditState(graphicsPanel, inspector));
+        });
         JButton brush = createTopBarButton("/images/brush.png");
         brush.addActionListener(e -> {
-            graphicsPanel.setHandlerState(new BrushState(graphicsPanel));
+            graphicsPanel.setHandlerState(new BrushState(graphicsPanel, inspector));
         });
         JButton line = createTopBarButton("/images/line.png");
         line.addActionListener(e -> {
-            graphicsPanel.setHandlerState(new LineState(graphicsPanel));
+            graphicsPanel.setHandlerState(new LineState(graphicsPanel, inspector));
         });
         JButton rectangle = createTopBarButton("/images/rectangle.png");
         rectangle.addActionListener(e -> {
-            graphicsPanel.setHandlerState(new RectangleState(graphicsPanel));
-            createRightBarRectabgle();
+            graphicsPanel.setHandlerState(new RectangleState(graphicsPanel, inspector));
         });
         JButton oval = createTopBarButton("/images/oval.png");
         oval.addActionListener(e -> {
-            graphicsPanel.setHandlerState(new OvalState(graphicsPanel));
+            graphicsPanel.setHandlerState(new OvalState(graphicsPanel, inspector));
         });
+
 
         JButton zoomPlus = createZoomBarButton("/images/zoomplus.png");
         JButton zoomMinus = createZoomBarButton("/images/zoomminus.png");
@@ -145,15 +149,15 @@ public class GVEFrame extends JFrame {
 
 
 
-    private  void createRightBarRectabgle(){
+    private  void createRightBar(){
         /**
          * Right panel init
          */
-        JPanel rightBar = new JPanel();
-        rightBar.setBackground(BAR_COLOR);
-        rightBar.setLayout(new BoxLayout(rightBar, BoxLayout.PAGE_AXIS));
-        rightBar.setPreferredSize(new Dimension(200, MIN_FRAME_HEIGHT));
-        rightBar.setBorder(BorderFactory.createLineBorder(BORDER_COLOR));
+        inspector = new JPanel();
+        inspector.setBackground(BAR_COLOR);
+        inspector.setLayout(new BoxLayout(inspector, BoxLayout.PAGE_AXIS));
+        inspector.setPreferredSize(new Dimension(200, MIN_FRAME_HEIGHT));
+        inspector.setBorder(BorderFactory.createLineBorder(BORDER_COLOR));
 
         /**
          *  Panel for position init
@@ -168,8 +172,8 @@ public class GVEFrame extends JFrame {
         positionPanel.add(positionX);
         positionPanel.add(positionY);
 
-        rightBar.add(Box.createRigidArea(new Dimension(20, 20)));
-        rightBar.add(positionPanel);
+        inspector.add(Box.createRigidArea(new Dimension(20, 20)));
+        inspector.add(positionPanel);
 
         /**
          *  Panel for size init
@@ -240,14 +244,14 @@ public class GVEFrame extends JFrame {
         colorPanel.add(new JLabel("Color:"));
         colorPanel.add(colorRedGreenBluePanel);
 
-        rightBar.add(Box.createRigidArea(new Dimension(20, 20)));
-        rightBar.add(sizedPanel);
-        rightBar.add(Box.createRigidArea(new Dimension(20, 20)));
-        rightBar.add(colorPanel);
-        rightBar.add(Box.createRigidArea(new Dimension(20, 20)));
-        rightBar.add(borderPanel);
+        inspector.add(Box.createRigidArea(new Dimension(20, 20)));
+        inspector.add(sizedPanel);
+        inspector.add(Box.createRigidArea(new Dimension(20, 20)));
+        inspector.add(colorPanel);
+        inspector.add(Box.createRigidArea(new Dimension(20, 20)));
+        inspector.add(borderPanel);
 
-        add(rightBar, BorderLayout.EAST);
+        add(inspector, BorderLayout.EAST);
     }
 
     private JButton createTopBarButton(String iconPath) {
