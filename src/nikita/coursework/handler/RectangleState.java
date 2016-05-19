@@ -19,6 +19,8 @@ public class RectangleState extends AbstractState {
 
     GVERectangle rect;
     private JTextField thickness;
+    JTextField red, green, blue;
+
 
     public RectangleState(GVEDrawingPanel panel, JPanel inspector) {
         super(panel, inspector);
@@ -31,6 +33,7 @@ public class RectangleState extends AbstractState {
         if (e != null) {
             rect = new GVERectangle(e.getX(), e.getY(), 0, 0);
             this.panel.setTempShape(rect);
+
         }
     }
 

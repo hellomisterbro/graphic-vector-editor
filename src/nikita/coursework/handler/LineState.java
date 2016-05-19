@@ -6,6 +6,7 @@ import nikita.coursework.widget.GVEDrawingPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Arc2D;
 
 /**
  * Created by nikita on 11.05.16.
@@ -42,6 +43,14 @@ public class LineState extends AbstractState {
         line = (GVELine) this.panel.getTempShape();
         if (line != null && line instanceof GVELine) {
              line.setCords(mousePressedX, mousePressedY, e.getX(), e.getY());
+            positionX1.setText(Integer.toString((int)line.getX1()));
+            positionX2.setText(Integer.toString((int)line.getX2()));
+            positionY1.setText(Integer.toString((int)line.getY1()));
+            positionY2.setText(Integer.toString((int)line.getY2()));
+            thickness.setText(Integer.toString((int)line.getThickness()));
+            red.setText(Integer.toString(line.getColor().getRed()));
+            green.setText(Integer.toString(line.getColor().getGreen()));
+            blue.setText(Integer.toString(line.getColor().getBlue()));
             this.panel.repaint();
         }
     }
@@ -82,7 +91,7 @@ public class LineState extends AbstractState {
          *  Panel for size init
          */
         JPanel sizedPanel = new JPanel();
-        JLabel sizeName = new JLabel("Size:      ");
+        JLabel sizeName = new JLabel("           ");
         positionX2 = new JTextField();
 
         positionX2.addActionListener(e->{
