@@ -17,7 +17,16 @@ public class GVEOval extends GVEShape {
 
     @Override
     public void draw(Graphics g) {
+
         Graphics2D g2d = (Graphics2D) g.create();
+
+        g2d.setColor(color);
+        g2d.fillOval((int)(x), (int)(y),
+                (int)(width), (int)(height));
+        g2d.dispose();
+
+        g2d = (Graphics2D) g.create();
+        g2d.setStroke(new BasicStroke(thickness));
         Ellipse2D oval = new Ellipse2D.Double(x, y, width, height);
         g2d.draw(oval);
         g2d.dispose();

@@ -1,8 +1,6 @@
 package nikita.coursework.handler;
 
 import nikita.coursework.composite.GVEOval;
-import nikita.coursework.composite.GVERectangle;
-import nikita.coursework.composite.GVEShape;
 import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
@@ -15,7 +13,12 @@ import java.awt.event.MouseEvent;
  * @author nikita
  */
 public class OvalState extends AbstractState {
-    
+
+    GVEOval oval;
+    JTextField thickness;
+    JTextField red, green, blue;
+    JTextField x, y, width, height;
+
     public OvalState(GVEDrawingPanel panel, JPanel inspector){
         super(panel, inspector);
     }
@@ -25,8 +28,21 @@ public class OvalState extends AbstractState {
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
-        GVEOval oval = new GVEOval(e.getX(), e.getY(), 0, 0);
+        oval = new GVEOval(e.getX(), e.getY(), 0, 0);
         this.panel.setTempShape(oval);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        super.mouseDragged(e);
+        thickness.setText(String.valueOf(oval.getThickness()));
+        red.setText(String.valueOf(oval.getColor().getRed()));
+        green.setText(String.valueOf(oval.getColor().getGreen()));
+        blue.setText(String.valueOf(oval.getColor().getBlue()));
+        x.setText(String.valueOf(oval.getX()));
+        y.setText(String.valueOf(oval.getY()));
+        width.setText(String.valueOf(oval.getWidth()));
+        height.setText(String.valueOf(oval.getWidth()));
     }
 
     @Override
@@ -41,13 +57,24 @@ public class OvalState extends AbstractState {
          */
         JPanel positionPanel = new JPanel();
         JLabel positionName = new JLabel("Position:");
-        JTextField positionX = new JTextField();
-        JTextField positionY = new JTextField();
+
+        x = new JTextField();
+        x.addActionListener(e -> {
+            oval.setX(Integer.parseInt(x.getText()));
+            panel.repaint();
+        });
+
+        y = new JTextField();
+        y.addActionListener(e -> {
+            oval.setX(Integer.parseInt(y.getText()));
+            panel.repaint();
+        });
+
         positionPanel.setLayout(new BoxLayout(positionPanel, BoxLayout.LINE_AXIS));
         positionPanel.setMaximumSize(new Dimension(200, 20));
         positionPanel.add(positionName);
-        positionPanel.add(positionX);
-        positionPanel.add(positionY);
+        positionPanel.add(x);
+        positionPanel.add(y);
 
         inspector.add(Box.createRigidArea(new Dimension(20, 20)));
         inspector.add(positionPanel);
@@ -57,8 +84,16 @@ public class OvalState extends AbstractState {
          */
         JPanel sizedPanel = new JPanel();
         JLabel sizeName = new JLabel("Size:      ");
-        JTextField width = new JTextField();
-        JTextField height = new JTextField();
+        width = new JTextField();
+        width.addActionListener(e -> {
+            oval.setWidth(Integer.parseInt(width.getText()));
+            panel.repaint();
+        });
+        height = new JTextField();
+        height.addActionListener(e -> {
+            oval.setHeight(Integer.parseInt(height.getText()));
+            panel.repaint();
+        });
         sizedPanel.setLayout(new BoxLayout(sizedPanel, BoxLayout.LINE_AXIS));
         sizedPanel.setMaximumSize(new Dimension(200, 20));
         sizedPanel.add(sizeName);
@@ -74,10 +109,11 @@ public class OvalState extends AbstractState {
         JPanel borderThicknessPanel = new JPanel();
         JPanel redGreenBlueBorderPanel = new JPanel();
         JLabel borderName = new JLabel("Thickness:   ");
-        JTextField thickness = new JTextField();
-        JTextField red = new JTextField();
-        JTextField green = new JTextField();
-        JTextField blue = new JTextField();
+        thickness = new JTextField();
+        thickness.addActionListener(e -> {
+            oval.setThickness(Integer.parseInt(thickness.getText()));
+            panel.repaint();
+        });
 
         borderThicknessPanel.setLayout(new BoxLayout(borderThicknessPanel, BoxLayout.LINE_AXIS));
         borderThicknessPanel.setMaximumSize(new Dimension(200, 20));
@@ -85,14 +121,6 @@ public class OvalState extends AbstractState {
         borderThicknessPanel.add(thickness);
 
 
-        redGreenBlueBorderPanel.setLayout(new BoxLayout(redGreenBlueBorderPanel, BoxLayout.LINE_AXIS));
-        redGreenBlueBorderPanel.setMaximumSize(new Dimension(200, 30));
-        redGreenBlueBorderPanel.add(new JLabel("R:"));
-        redGreenBlueBorderPanel.add(red);
-        redGreenBlueBorderPanel.add(new JLabel("G:"));
-        redGreenBlueBorderPanel.add(green);
-        redGreenBlueBorderPanel.add(new JLabel("B:"));
-        redGreenBlueBorderPanel.add(blue);
 
         borderPanel.add(new JLabel("Border:"));
         borderPanel.add(borderThicknessPanel);
@@ -104,19 +132,34 @@ public class OvalState extends AbstractState {
         JPanel colorPanel = new JPanel();
         colorPanel.setLayout(new BoxLayout(colorPanel, BoxLayout.PAGE_AXIS));
         JPanel colorRedGreenBluePanel = new JPanel();
-        JTextField colorRed = new JTextField();
-        JTextField colorGreen = new JTextField();
-        JTextField colorBlue = new JTextField();
+        red = new JTextField();
+        red.addActionListener(e -> {
+            oval.setColor(new Color(Integer.parseInt(red.getText()), oval.getColor().getGreen(), oval.getColor().getBlue()));
+            panel.repaint();
+        });
+
+        green = new JTextField();
+        green.addActionListener(e -> {
+            oval.setColor(new Color(oval.getColor().getRed(), Integer.parseInt(green.getText()), oval.getColor().getBlue()));
+            panel.repaint();
+        });
+
+        blue = new JTextField();
+        blue.addActionListener(e -> {
+            oval.setColor(new Color(oval.getColor().getRed(), oval.getColor().getGreen(),Integer.parseInt(blue.getText())));
+            panel.repaint();
+        });
+
 
 
         colorRedGreenBluePanel.setLayout(new BoxLayout(colorRedGreenBluePanel, BoxLayout.LINE_AXIS));
         colorRedGreenBluePanel.setMaximumSize(new Dimension(200, 25));
         colorRedGreenBluePanel.add(new JLabel("R:"));
-        colorRedGreenBluePanel.add(colorRed);
+        colorRedGreenBluePanel.add(red);
         colorRedGreenBluePanel.add(new JLabel("G:"));
-        colorRedGreenBluePanel.add(colorGreen);
+        colorRedGreenBluePanel.add(green);
         colorRedGreenBluePanel.add(new JLabel("B:"));
-        colorRedGreenBluePanel.add(colorBlue);
+        colorRedGreenBluePanel.add(blue);
 
         colorPanel.add(new JLabel("Color:"));
         colorPanel.add(colorRedGreenBluePanel);

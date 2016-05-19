@@ -11,7 +11,7 @@ public abstract class GVEShape {
     protected double x = 0, y =0;
     protected double width = 0, height = 0;
 
-    protected Color color = new Color(0, 0, 0);
+    protected Color color = new Color(245, 245, 245);
     protected int thickness = 1;
 
     GVEShape(){}

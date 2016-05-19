@@ -19,6 +19,8 @@ abstract public class AbstractState extends MouseAdapter {
 
     protected Double mousePressedX, mousePressedY;
 
+
+
     protected AbstractState(GVEDrawingPanel panel, JPanel inspector) {
         this.panel = panel;
         setEmptyPanel(inspector);

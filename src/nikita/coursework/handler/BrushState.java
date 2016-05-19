@@ -17,10 +17,8 @@ public class BrushState extends AbstractState {
 
     GVEBrush brush;
 
-    JTextField widthField;
-    JTextField heigthField;
-    JTextField positionX;
-    JTextField positionY;
+    JTextField widthField, heigthField;
+    JTextField positionX, positionY;
     JTextField radious;
     JTextField red, green, blue;
 
