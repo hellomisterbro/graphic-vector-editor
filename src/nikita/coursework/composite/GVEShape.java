@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public abstract class GVEShape {
     protected int x, y;
-    protected int width, height;
+    protected int width = 0, height = 0;
 
     GVEShape(){}
 
