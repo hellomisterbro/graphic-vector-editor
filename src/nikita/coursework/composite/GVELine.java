@@ -1,6 +1,7 @@
 package nikita.coursework.composite;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 /**
  * Created by nikita on 11.05.16.
@@ -9,28 +10,66 @@ import java.awt.*;
  */
 public class GVELine extends GVEShape {
 
-    int x1, y1, x2, y2;
+    double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 
-    public GVELine(int x, int y, int width, int height) {
+    public GVELine(double x, double y, double width, double height) {
         super(x, y, width, height);
     }
 
-    public void setCords(int x1, int y1, int x2, int y2) {
+    public void setCords(double x1, double y1, double x2, double y2) {
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
+        this.x = (x1 < x2) ? x1 : x2;
+        this.y = (y1 < y2) ? y1 : y2;
+        this.height = ((y1 > y2) ? y1 : y2) - ((y1 > y2) ? y1 : y2);
+        this.width = ((x1 > x2) ? x1 : x2) - ((x1 < x2) ? x1 : x2);
+    }
+
+    public void setX1(double x1) {
+        this.x1 = x1;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+    }
+
+    public void setY1(double y1) {
+        this.y1 = y1;
+    }
+
+    public void setY2(double y2) {
+        this.y2 = y2;
+    }
+
+
+    @Override
+    public void setWidth(double width) {
+        if (this.width != 0)
+            this.x1 = x + (x - x1) * width / this.width;
+        super.setWidth(width);
+    }
+
+    @Override
+    public void setHeight(double height) {
+        if (this.height != 0)
+            this.y1 = y + (y - y1) * height / this.height;
+        super.setHeight(height);
     }
 
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.drawLine(x1, y1, x2, y2);
+        g2d.setStroke(new BasicStroke(thickness));
+        g2d.setColor(color);
+        Line2D line = new Line2D.Double(x1, y1, x2, y2);
+        g2d.draw(line);
         g2d.dispose();
     }
 
     @Override
-    public void move(int x, int y) {
+    public void move(double x, double y) {
         //TODO: Implement
     }
 }

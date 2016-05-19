@@ -19,7 +19,7 @@ public class GVEComposite extends GVEShape {
         super();
     }
 
-    GVEComposite(int posX, int posY, int width, int height) {
+    GVEComposite(double posX, double posY, double width, double height) {
         super(posX, posY, width, height);
     }
 
@@ -42,7 +42,7 @@ public class GVEComposite extends GVEShape {
     }
 
     @Override
-    public void move(int x, int y) {
+    public void move(double x, double y) {
 
     }
 }

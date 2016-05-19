@@ -8,66 +8,84 @@ import java.awt.*;
  * @author nikita
  */
 public abstract class GVEShape {
-    protected int x, y;
-    protected int width = 0, height = 0;
+    protected double x = 0, y =0;
+    protected double width = 0, height = 0;
+
+    protected Color color = new Color(0, 0, 0);
+    protected int thickness = 1;
 
     GVEShape(){}
 
-    GVEShape(int x, int y, int width, int height){
+    GVEShape(double x, double y, double width, double height){
         setX(x);
         setY(y);
         setWidth(width);
         setHeight(height);
     }
 
-    public void setCords(int posX, int posY) {
+    public void setCords(double posX, double posY) {
         setX(posX);
         setY(posY);
     }
 
-    public void setSize(int width, int height){
+    public void setSize(double width, double height){
         setWidth(width);
         setHeight(height);
     }
 
 
-    public boolean containsPoint(int x, int y) {
+    public boolean containsPoint(double x, double y) {
         return (this.x < x &&  x < this.x + width) && (this.y < y &&  y < this.y + height);
     }
+    public Color getColor() {
+        return color;
+    }
 
-    public void setX(int posX) {
+    public void setThickness(int thickness) {
+        this.thickness = thickness;
+    }
+
+    public int getThickness() {
+        return thickness;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setX(double posX) {
         this.x = posX;
     }
 
-    public void setY(int posY) {
+    public void setY(double posY) {
         this.y = posY;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(double width) {
         this.width = width;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
     public abstract void draw(Graphics g);
 
-    public abstract void move(int x, int y);
+    public abstract void move(double x, double y);
 
-    public int getX() {
+    public double getX() {
         return this.x;
     }
 
-    public int getY() {
+    public double getY() {
         return this.y;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return this.width;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return this.height;
     }
 }

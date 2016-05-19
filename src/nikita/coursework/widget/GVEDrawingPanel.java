@@ -135,7 +135,6 @@ public class GVEDrawingPanel extends JLayeredPane {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         picture.draw(g2d);
-        System.out.println(picture.getChilds().size());
 
         if (tempShape != null) {
             tempShape.draw(g2d);

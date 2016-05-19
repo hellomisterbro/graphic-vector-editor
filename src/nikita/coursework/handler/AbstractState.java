@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
 abstract public class AbstractState extends MouseAdapter {
     protected GVEDrawingPanel panel;
 
-    protected Integer mousePressedX, mousePressedY;
+    protected Double mousePressedX, mousePressedY;
 
     protected AbstractState(GVEDrawingPanel panel, JPanel inspector) {
         this.panel = panel;
@@ -29,8 +29,8 @@ abstract public class AbstractState extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
-        this.mousePressedX = e.getX();
-        this.mousePressedY = e.getY();
+        this.mousePressedX = (double)e.getX();
+        this.mousePressedY = (double)e.getY();
     }
 
     @Override

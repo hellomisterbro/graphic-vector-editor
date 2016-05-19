@@ -6,6 +6,8 @@ import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 /**
@@ -19,6 +21,8 @@ public class BrushState extends AbstractState {
     JTextField heigthField;
     JTextField positionX;
     JTextField positionY;
+    JTextField radious;
+    JTextField red, green, blue;
 
     public BrushState(GVEDrawingPanel panel, JPanel inspector) {
         super(panel, inspector);
@@ -35,11 +39,16 @@ public class BrushState extends AbstractState {
     @Override
     public void mouseDragged(MouseEvent e) {
         ((GVEBrush) panel.getTempShape()).add(e.getPoint());
-        //    System.out.println("x: " + brush.getX() + "; y: " + brush.getY() + "; w: " + brush.getWidth() + "; h: " + brush.getHeight() );
-        widthField.setText(Integer.toString(brush.getWidth()));
-        heigthField.setText(Integer.toString(brush.getHeight()));
-        positionX.setText(Integer.toString(brush.getX()));
-        positionY.setText(Integer.toString(brush.getY()));
+
+        widthField.setText(Double.toString(brush.getWidth()));
+        heigthField.setText(Double.toString(brush.getHeight()));
+        positionX.setText(Double.toString(brush.getX()));
+        positionY.setText(Double.toString(brush.getY()));
+        radious.setText(Integer.toString(brush.getThickness()));
+        red.setText(String.valueOf(brush.getColor().getRed()));
+        green.setText(String.valueOf(brush.getColor().getGreen()));
+        blue.setText(String.valueOf(brush.getColor().getBlue()));
+
         this.panel.repaint();
     }
 
@@ -60,11 +69,11 @@ public class BrushState extends AbstractState {
         positionX = new JTextField();
         positionY = new JTextField();
         positionX.addActionListener(e->{
-            brush.setX(Integer.parseInt(positionX.getText()));
+            brush.setX(Double.parseDouble(positionX.getText()));
             panel.repaint();
         });
         positionY.addActionListener(e->{
-            brush.setY(Integer.parseInt(positionY.getText()));
+            brush.setY(Double.parseDouble(positionY.getText()));
             panel.repaint();
         });
         positionPanel.setLayout(new BoxLayout(positionPanel, BoxLayout.LINE_AXIS));
@@ -85,13 +94,12 @@ public class BrushState extends AbstractState {
         widthField = new JTextField();
 
         widthField.addActionListener(e->{
-            brush.resizeBrushWidth(Integer.parseInt(widthField.getText()));
+            brush.setWidth(Double.parseDouble(widthField.getText()));
             panel.repaint();
         });
         heigthField = new JTextField();
         heigthField.addActionListener(e->{
-            System.out.println("saddasdas");
-            brush.resizeBrushHeight( Integer.parseInt(heigthField.getText()));
+            brush.setHeight( Double.parseDouble(heigthField.getText()));
             panel.repaint();
         });
         sizedPanel.setLayout(new BoxLayout(sizedPanel, BoxLayout.LINE_AXIS));
@@ -110,14 +118,30 @@ public class BrushState extends AbstractState {
         JPanel borderThicknessPanel = new JPanel();
         JPanel redGreenBlueBorderPanel = new JPanel();
         JLabel borderName = new JLabel("Radious:   ");
-        JTextField radious = new JTextField();
+
+        radious = new JTextField();
         radious.addActionListener(e -> {
-            brush.setRadious(Integer.parseInt(radious.getText()));
+            brush.setThickness(Integer.parseInt(radious.getText()));
             panel.repaint();
         });
-        JTextField red = new JTextField();
-        JTextField green = new JTextField();
-        JTextField blue = new JTextField();
+
+        red = new JTextField();
+        red.addActionListener(e -> {
+            brush.setColor(new Color(Integer.parseInt(red.getText()), brush.getColor().getGreen(),brush.getColor().getBlue()));
+            panel.repaint();
+        });
+
+        green = new JTextField();
+        green.addActionListener(e -> {
+            brush.setColor(new Color(brush.getColor().getRed(), Integer.parseInt(green.getText()),brush.getColor().getBlue()));
+            panel.repaint();
+        });
+
+        blue = new JTextField();
+        blue.addActionListener(e -> {
+            brush.setColor(new Color(brush.getColor().getRed(), brush.getColor().getGreen(),Integer.parseInt(blue.getText())));
+            panel.repaint();
+        });
 
         borderThicknessPanel.setLayout(new BoxLayout(borderThicknessPanel, BoxLayout.LINE_AXIS));
         borderThicknessPanel.setMaximumSize(new Dimension(200, 20));
