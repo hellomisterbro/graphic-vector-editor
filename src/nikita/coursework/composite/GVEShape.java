@@ -1,6 +1,7 @@
 package nikita.coursework.composite;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Created by nikita on 11.05.16.
@@ -13,6 +14,8 @@ public abstract class GVEShape {
 
     protected Color color = new Color(245, 245, 245);
     protected int thickness = 1;
+
+    Rectangle2D frame = null;
 
     GVEShape(){}
 
@@ -31,6 +34,24 @@ public abstract class GVEShape {
     public void setSize(double width, double height){
         setWidth(width);
         setHeight(height);
+    }
+
+    public void setFrame(){
+        frame = new Rectangle2D.Double(x - 3, y - 3, width + 6, height + 6);
+    }
+
+    public void removeFrame(){
+        frame = null;
+    }
+
+
+    protected void drawFrame(Graphics g){
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,
+                10.0f, new float[]{5.0f}, 0.0f/*ставь не думая*/));
+        Rectangle2D rect = frame;
+        g2d.draw(rect);
+        g2d.dispose();
     }
 
 
@@ -54,10 +75,16 @@ public abstract class GVEShape {
     }
 
     public void setX(double posX) {
+        if (frame != null){
+            frame = new Rectangle2D.Double(posX - 3, frame.getY(), frame.getWidth(), frame.getHeight());
+        }
         this.x = posX;
     }
 
     public void setY(double posY) {
+        if (frame != null){
+            frame = new Rectangle2D.Double(frame.getX(), posY - 3, frame.getWidth(), frame.getHeight());
+        }
         this.y = posY;
     }
 

@@ -81,6 +81,9 @@ public class GVELine extends GVEShape {
         Line2D line = new Line2D.Double(x1, y1, x2, y2);
         g2d.draw(line);
         g2d.dispose();
+
+        if(frame != null)
+            drawFrame(g);
     }
 
     @Override

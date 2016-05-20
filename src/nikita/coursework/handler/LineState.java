@@ -35,6 +35,8 @@ public class LineState extends AbstractState {
         super.mousePressed(e);
 
         line = new GVELine(e.getX(), e.getY(), 0, 0);
+        line.setThickness(3);
+        line.setColor(new Color(43, 43, 43));
         this.panel.setTempShape(line);
     }
     @Override
@@ -47,7 +49,7 @@ public class LineState extends AbstractState {
             positionX2.setText(Integer.toString((int)line.getX2()));
             positionY1.setText(Integer.toString((int)line.getY1()));
             positionY2.setText(Integer.toString((int)line.getY2()));
-            thickness.setText(Integer.toString((int)line.getThickness()));
+            thickness.setText(Integer.toString(line.getThickness()));
             red.setText(Integer.toString(line.getColor().getRed()));
             green.setText(Integer.toString(line.getColor().getGreen()));
             blue.setText(Integer.toString(line.getColor().getBlue()));

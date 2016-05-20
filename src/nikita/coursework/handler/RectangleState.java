@@ -42,14 +42,7 @@ public class RectangleState extends AbstractState {
     @Override
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
-        thickness.setText(String.valueOf(rect.getThickness()));
-        red.setText(String.valueOf(rect.getColor().getRed()));
-        green.setText(String.valueOf(rect.getColor().getGreen()));
-        blue.setText(String.valueOf(rect.getColor().getBlue()));
-        x.setText(String.valueOf(rect.getX()));
-        y.setText(String.valueOf(rect.getY()));
-        width.setText(String.valueOf(rect.getWidth()));
-        height.setText(String.valueOf(rect.getWidth()));
+       updateUI();
     }
 
     @Override
@@ -57,6 +50,24 @@ public class RectangleState extends AbstractState {
         super.mouseReleased(e);
 
     }
+
+    public void setRect(GVERectangle rect){
+        this.rect = rect;
+        updateUI();
+    }
+
+    public void updateUI(){
+        thickness.setText(String.valueOf(rect.getThickness()));
+        red.setText(String.valueOf(rect.getColor().getRed()));
+        green.setText(String.valueOf(rect.getColor().getGreen()));
+        blue.setText(String.valueOf(rect.getColor().getBlue()));
+        x.setText(String.valueOf((int)rect.getX()));
+        y.setText(String.valueOf((int)rect.getY()));
+        width.setText(String.valueOf((int)rect.getWidth()));
+        height.setText(String.valueOf((int)rect.getWidth()));
+    }
+
+
 
     protected void setInnerElements(JPanel inspector) {
         /**
@@ -73,7 +84,7 @@ public class RectangleState extends AbstractState {
 
         y = new JTextField();
         y.addActionListener(e -> {
-            rect.setX(Integer.parseInt(y.getText()));
+            rect.setY(Integer.parseInt(y.getText()));
             panel.repaint();
         });
 

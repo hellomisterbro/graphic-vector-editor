@@ -30,6 +30,9 @@ public class GVEOval extends GVEShape {
         Ellipse2D oval = new Ellipse2D.Double(x, y, width, height);
         g2d.draw(oval);
         g2d.dispose();
+
+        if(frame != null)
+            drawFrame(g);
     }
 
     @Override

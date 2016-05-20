@@ -28,6 +28,10 @@ public class GVERectangle extends GVEShape {
         Rectangle2D rect = new Rectangle2D.Double(x, y, width, height);
         g2d.draw(rect);
         g2d.dispose();
+
+        if(frame != null)
+            drawFrame(g);
+
     }
 
 

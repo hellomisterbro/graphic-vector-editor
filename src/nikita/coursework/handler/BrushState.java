@@ -31,6 +31,8 @@ public class BrushState extends AbstractState {
         super.mousePressed(e);
         brush = new GVEBrush(e.getX(), e.getY(), 1);
         brush.add(e.getPoint());
+        brush.setColor(new Color(43, 43, 43));
+        brush.setThickness(3);
         panel.setTempShape(brush);
     }
 

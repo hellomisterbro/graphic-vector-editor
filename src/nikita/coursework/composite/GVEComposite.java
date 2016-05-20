@@ -35,7 +35,10 @@ public class GVEComposite extends GVEShape {
     public void draw(Graphics g) {
         for (GVEShape c : childs)
             c.draw(g);
+        if(frame != null)
+            drawFrame(g);
     }
+
 
     public List<GVEShape> getChilds() {
         return childs;

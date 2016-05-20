@@ -91,7 +91,7 @@ public class GVEDrawingPanel extends JLayeredPane {
     }
 
     public GVEShape selectElement(int x, int y){
-        for(GVEShape shape: group)
+        for(GVEShape shape: picture.getChilds())
             if (shape.containsPoint(x, y))
                 return shape;
         return null;
@@ -117,6 +117,7 @@ public class GVEDrawingPanel extends JLayeredPane {
         group.clear();
         for (GVEShape child : picture.getChilds()) {
             if (frame.contains(child.getX(), child.getY())) {
+                System.out.println("Element has chosen");
                 group.add(child);
             }
         }
@@ -138,6 +139,12 @@ public class GVEDrawingPanel extends JLayeredPane {
 
         if (tempShape != null) {
             tempShape.draw(g2d);
+        }
+
+        if (frame.getHeight() != 0 && frame.getWidth() != 0) {
+            ((Graphics2D) g).setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER,
+                    10.0f, new float[]{5.0f}, 0.0f/*ставь не думая*/));
+            ((Graphics2D) g).draw(frame);
         }
     }
 }

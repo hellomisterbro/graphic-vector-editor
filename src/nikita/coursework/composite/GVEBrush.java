@@ -34,6 +34,9 @@ public class GVEBrush extends GVEShape {
         for (int i = 1; i < points.size(); i++)
             g2d.draw(new Line2D.Double(points.get(i - 1), points.get(i)));
         g2d.dispose();
+
+        if(frame != null)
+            drawFrame(g);
     }
 
     private void setNewProperties() {
