@@ -75,24 +75,27 @@ public class GVEComposite extends GVEShape {
     }
 
     public void setWidth(double width) {
-        for (GVEShape p: childs) {
-               p.setWidth(width);
-            }
+        if (this.width != 0)
+        for (GVEShape p : childs) {
+            p.setWidth(p.width*(this.width/width));
 
+        }
         super.setWidth(width);
     }
 
 
     public void setHeight(double height) {
-        for (GVEShape p: childs) {
-            p.setHeight(height);
-        }
+        if (this.height != 0)
+        for (GVEShape p : childs) {
+            p.setWidth(p.height*(this.height/height));
 
+        }
         super.setHeight(height);
     }
 
 
     private void setNewProperties() {
+
         double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
         double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE;
         for (GVEShape p : childs) {
@@ -101,9 +104,9 @@ public class GVEComposite extends GVEShape {
             if (p.getY() < minY)
                 minY = p.getY();
             if (p.getX() > maxX)
-                maxX = p.getX();
+                maxX = p.getX() + p.width;
             if (p.getY() > maxY)
-                maxY = p.getY();
+                maxY = p.getY() + p.height;
         }
         if (minY != Double.MAX_VALUE)
             this.y = minY;

@@ -37,7 +37,7 @@ public class OvalState extends AbstractState {
         x.setText(String.valueOf((int)oval.getX()));
         y.setText(String.valueOf((int)oval.getY()));
         width.setText(String.valueOf((int)oval.getWidth()));
-        height.setText(String.valueOf((int)oval.getWidth()));
+        height.setText(String.valueOf((int)oval.getHeight()));
     }
 
 

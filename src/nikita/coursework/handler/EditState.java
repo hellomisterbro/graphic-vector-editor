@@ -37,10 +37,10 @@ public class EditState extends AbstractState {
         groupButton.addActionListener(e -> {
             GVEComposite comp = new GVEComposite();
             for (GVEShape shape: group) {
-                System.out.println("GROUP BUTTON");
                 shape.removeFrame();
-                panel.getPicture().remove(shape);
                 comp.add(shape);
+                panel.getPicture().remove(shape);
+
             }
             panel.getPicture().add(comp);
             comp.setFrame();
@@ -51,7 +51,24 @@ public class EditState extends AbstractState {
         });
 
         ungoupButton.addActionListener(e-> {
-            //TODO: Composite
+            if(group.size() == 1 && group.get(0) instanceof GVEComposite){
+                List<GVEShape> copyList = new ArrayList<>();
+
+                GVEComposite comp = (GVEComposite) group.get(0);
+                comp.removeFrame();
+                for(GVEShape shape: comp.getChilds()){
+                    panel.getPicture().add(shape);
+                    copyList.add(shape);
+                }
+                panel.getPicture().remove(comp);
+                group.clear();
+                for(GVEShape shape: copyList){
+                   shape.setFrame();
+                    group.add(shape);
+                }
+
+                panel.repaint();
+            }
         });
 
     }
@@ -97,6 +114,8 @@ public class EditState extends AbstractState {
                     BrushState r = new BrushState(panel, inspector);
                     r.setBrush((GVEBrush) gs);
                     panel.setHandlerState(r);
+                } else if(gs instanceof GVEComposite){
+                    //TODO: Enable button
                 }
             }
         } else {

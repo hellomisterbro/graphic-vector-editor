@@ -65,7 +65,7 @@ public class RectangleState extends AbstractState {
         x.setText(String.valueOf((int)rect.getX()));
         y.setText(String.valueOf((int)rect.getY()));
         width.setText(String.valueOf((int)rect.getWidth()));
-        height.setText(String.valueOf((int)rect.getWidth()));
+        height.setText(String.valueOf((int)rect.getHeight()));
     }
 
 
