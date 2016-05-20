@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author nikita
  */
-public class GVECaretacker {
+public class GVECaretaker {
 
     private static final int MAX_MEMENTOS = 20;
 
@@ -17,7 +17,7 @@ public class GVECaretacker {
     private int position;
 
 
-    public GVECaretacker() {
+    public GVECaretaker() {
         // Creates empty ArrayList and initialize it with empty picture
         mementoList = new ArrayList<>(MAX_MEMENTOS);
 

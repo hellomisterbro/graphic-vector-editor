@@ -57,6 +57,7 @@ public class GVEComposite extends GVEShape {
 
     }
 
+
     @Override
     public void setX(double x) {
             for (GVEShape p : childs) {
@@ -113,5 +114,10 @@ public class GVEComposite extends GVEShape {
             width = maxX - minX;
         if (maxY != Double.MIN_VALUE || minY != Double.MAX_VALUE)
             height = maxY - minY;
+    }
+
+    @Override
+    public GVEShape clone() {
+        return null;
     }
 }

@@ -106,4 +106,9 @@ public class GVEBrush extends GVEShape {
     public void move(double x, double y) {
 
     }
+
+    @Override
+    public GVEShape clone() {
+        return null;
+    }
 }

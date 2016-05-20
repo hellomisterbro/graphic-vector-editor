@@ -41,4 +41,9 @@ public class GVERectangle extends GVEShape {
         //TODO: Implement
     }
 
+
+    @Override
+    public GVEShape clone() {
+        return null;
+    }
 }

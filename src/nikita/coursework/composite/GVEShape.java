@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @author nikita
  */
-public abstract class GVEShape {
+public abstract class GVEShape implements Cloneable {
     protected double x = 0, y =0;
     protected double width = 0, height = 0;
 
@@ -115,4 +115,7 @@ public abstract class GVEShape {
     public double getHeight() {
         return this.height;
     }
+
+    @Override
+    public abstract GVEShape clone();
 }
