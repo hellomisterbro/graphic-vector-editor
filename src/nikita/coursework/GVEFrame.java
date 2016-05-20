@@ -16,9 +16,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-/**
- * Created by nikita on 10.05.16.
- */
 public class GVEFrame extends JFrame {
 
     public static final int MIN_FRAME_WIDTH = 900;
@@ -54,6 +51,7 @@ public class GVEFrame extends JFrame {
     }
 
     public void initUI(){
+
         setTitle("Graphic Vector Editor");
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setMinimumSize(new Dimension(MIN_FRAME_WIDTH, MIN_FRAME_HEIGHT));
@@ -63,6 +61,8 @@ public class GVEFrame extends JFrame {
         createTopBar();
         createRightBar();
         createKeyBinding();
+
+        createMenuBar();
     }
 
 
@@ -311,5 +311,31 @@ public class GVEFrame extends JFrame {
             return null;
         }
     }
+
+
+
+
+
+    void createMenuBar() {
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu     file = new JMenu    ("File");
+        JMenuItem save = new JMenuItem("Save");
+        JMenuItem load = new JMenuItem("Load");
+
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
+        load.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.ALT_MASK ));
+
+        menuBar.add(file);
+        file   .add(save);
+        file   .add(load);
+
+        save.addActionListener(graphicsPanel::onSaveAction);
+        load.addActionListener(graphicsPanel::onLoadAction);
+
+        this.setJMenuBar(menuBar);
+    }
+
 }
 

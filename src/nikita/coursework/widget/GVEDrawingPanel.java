@@ -9,12 +9,15 @@ import nikita.coursework.memento.GVEMemento;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 
 /**
@@ -23,6 +26,44 @@ import java.util.List;
  * @author nikita
  */
 public class GVEDrawingPanel extends JLayeredPane {
+
+    public void onSaveAction(ActionEvent actionEvent) {
+
+        final JFileChooser chooser = new JFileChooser();
+
+        if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+            try {
+                ObjectOutputStream stream = new ObjectOutputStream(
+                        new FileOutputStream(chooser.getSelectedFile())
+                );
+
+                stream.writeObject(picture);
+
+            } catch (Exception ignored) {}
+        }
+
+    }
+
+    public void onLoadAction(ActionEvent actionEvent) {
+
+        final JFileChooser chooser = new JFileChooser();
+
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+            try {
+                ObjectInputStream stream = new ObjectInputStream(
+                        new FileInputStream(chooser.getSelectedFile())
+                );
+
+                this.picture = (GVEComposite) stream.readObject();
+                this.repaint();
+
+            } catch (Exception ignored) { }
+        }
+
+    }
+
 
     private GVEComposite picture = new GVEComposite();
 
@@ -163,4 +204,6 @@ public class GVEDrawingPanel extends JLayeredPane {
             ((Graphics2D) g).draw(frame);
         }
     }
+
+
 }
