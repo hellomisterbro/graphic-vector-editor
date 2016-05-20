@@ -2,13 +2,42 @@ package nikita.coursework.composite;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
 /**
  * Created by nikita on 11.05.16.
  *
  * @author nikita
  */
-public abstract class GVEShape implements Cloneable {
+public abstract class GVEShape implements Cloneable, Serializable {
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        stream.defaultWriteObject();
+
+        stream.writeInt   (thickness);
+        stream.writeDouble(width    );
+        stream.writeDouble(height   );
+        stream.writeObject(color    );
+        stream.writeObject(frame    );
+        stream.writeDouble(x        );
+        stream.writeDouble(y        );
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+
+        thickness =               stream.readInt   ();
+        width     =               stream.readDouble();
+        height    =               stream.readDouble();
+        color     = (Color)       stream.readObject();
+        frame     = (Rectangle2D) stream.readObject();
+        x         =               stream.readDouble();
+        y         =               stream.readDouble();
+    }
+
+
+    // -----------------------------------------------
+
     protected double x = 0, y =0;
     protected double width = 0, height = 0;
 
@@ -43,7 +72,6 @@ public abstract class GVEShape implements Cloneable {
     public void removeFrame(){
         frame = null;
     }
-
 
     protected void drawFrame(Graphics g){
         Graphics2D g2d = (Graphics2D) g.create();

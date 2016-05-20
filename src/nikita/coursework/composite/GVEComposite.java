@@ -1,8 +1,8 @@
 package nikita.coursework.composite;
 
 import java.awt.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nikita on 11.05.16.
@@ -13,7 +13,21 @@ import java.util.ArrayList;
  * @author nikita
  */
 public class GVEComposite extends GVEShape {
+
     private List<GVEShape> childs = new ArrayList<>();
+
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        stream.defaultWriteObject();
+        stream.writeObject(childs);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+        childs = (List<GVEShape>) stream.readObject();
+    }
+
 
     public GVEComposite(){
         super();

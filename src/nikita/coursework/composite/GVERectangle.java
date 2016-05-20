@@ -10,9 +10,16 @@ import java.awt.geom.Rectangle2D;
  */
 public class GVERectangle extends GVEShape {
 
-
     public GVERectangle(double posX, double posY, double width, double height) {
         super(posX, posY, width, height);
+    }
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        stream.defaultWriteObject();
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        stream.defaultReadObject();
     }
 
     public void draw(Graphics g) {

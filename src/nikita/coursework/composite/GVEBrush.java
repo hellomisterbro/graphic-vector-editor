@@ -2,15 +2,22 @@ package nikita.coursework.composite;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.util.*;
+import java.util.ArrayList;
 
-/**
- * Created by nikita on 17.05.16.
- */
 public class GVEBrush extends GVEShape {
-    private java.util.List<Point> points = new ArrayList<Point>();
 
+    private java.util.List<Point> points = new ArrayList<>();
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        stream.defaultWriteObject();
+        stream.writeObject(points);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+        points = (java.util.List<Point>) stream.readObject();
+    }
 
     public GVEBrush(double x, double y, int radious) {
         super(x, y, radious, radious);
@@ -22,6 +29,9 @@ public class GVEBrush extends GVEShape {
         points.add(point);
         setNewProperties();
     }
+
+
+
 
 
     @Override
@@ -40,8 +50,10 @@ public class GVEBrush extends GVEShape {
     }
 
     private void setNewProperties() {
+
         double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
         double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE;
+
         for (Point p : points) {
             if (p.getX() < minX)
                 minX = p.getX();
@@ -52,6 +64,7 @@ public class GVEBrush extends GVEShape {
             if (p.getY() > maxY)
                 maxY = p.getY();
         }
+
         if (minY != Double.MAX_VALUE)
             this.y = minY;
         if (minX != Double.MAX_VALUE)

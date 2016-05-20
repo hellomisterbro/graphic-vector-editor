@@ -12,11 +12,33 @@ public class GVELine extends GVEShape {
 
     double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 
+
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        stream.defaultWriteObject();
+
+        stream.writeDouble(x1);
+        stream.writeDouble(y1);
+        stream.writeDouble(x2);
+        stream.writeDouble(y2);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+
+        x1 = stream.readDouble();
+        y1 = stream.readDouble();
+        x2 = stream.readDouble();
+        y2 = stream.readDouble();
+    }
+
+
     public GVELine(double x, double y, double width, double height) {
         super(x, y, width, height);
     }
 
     public void setCords(double x1, double y1, double x2, double y2) {
+
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;

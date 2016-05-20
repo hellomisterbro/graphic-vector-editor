@@ -15,6 +15,15 @@ public class GVEOval extends GVEShape {
         super(posX, posY, width, height);
     }
 
+    private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {
+        stream.defaultWriteObject();
+    }
+
+    private void readObject(java.io.ObjectInputStream stream) throws java.io.IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+    }
+
+
     @Override
     public void draw(Graphics g) {
 
@@ -39,4 +48,5 @@ public class GVEOval extends GVEShape {
     public GVEShape clone() {
         return null;
     }
+
 }
