@@ -39,4 +39,9 @@ public class GVEOval extends GVEShape {
     public void move(double x, double y) {
         //TODO: Implement
     }
+
+    @Override
+    public GVEShape clone() {
+        return null;
+    }
 }

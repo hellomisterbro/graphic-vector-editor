@@ -23,9 +23,9 @@ import java.util.List;
  */
 public class GVEDrawingPanel extends JLayeredPane {
 
-   private GVEComposite picture = new GVEComposite();
+    private GVEComposite picture = new GVEComposite();
 
-    private List<GVEShape> group = new ArrayList<>();
+    private ArrayList<GVEShape> group = new ArrayList<>();
 
     private Rectangle2D.Float frame = new Rectangle2D.Float();
 
@@ -93,7 +93,7 @@ public class GVEDrawingPanel extends JLayeredPane {
         return this.tempShape;
     }
 
-    public List<GVEShape> getGroup(){
+    public ArrayList<GVEShape> getGroup(){
         return group;
     }
 
