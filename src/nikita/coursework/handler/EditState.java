@@ -35,17 +35,18 @@ public class EditState extends AbstractState {
         this.group = panel.getGroup();
 
         groupButton.addActionListener(e -> {
-//            GVEComposite comp = new GVEComposite();
-//            for (GVEShape shape: group) {
-//                System.out.println("GROUP BUTTON");
-//                shape.removeFrame();
-//                panel.getPicture().remove(shape);
-//                comp.add(shape);
-//            }
-//            panel.getPicture().add(comp);
-//            comp.setFrame();
-//            group.clear();
-//            panel.repaint();
+            GVEComposite comp = new GVEComposite();
+            for (GVEShape shape: group) {
+                System.out.println("GROUP BUTTON");
+                shape.removeFrame();
+                panel.getPicture().remove(shape);
+                comp.add(shape);
+            }
+            panel.getPicture().add(comp);
+            comp.setFrame();
+            group.clear();
+            group.add(comp);
+            panel.repaint();
 
         });
 
