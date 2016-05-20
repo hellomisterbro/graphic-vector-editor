@@ -23,8 +23,24 @@ public class GVELine extends GVEShape {
         this.y2 = y2;
         this.x = (x1 < x2) ? x1 : x2;
         this.y = (y1 < y2) ? y1 : y2;
-        this.height = ((y1 > y2) ? y1 : y2) - ((y1 > y2) ? y1 : y2);
+        this.height = ((y1 > y2) ? y1 : y2) - ((y1 < y2) ? y1 : y2);
         this.width = ((x1 > x2) ? x1 : x2) - ((x1 < x2) ? x1 : x2);
+    }
+
+    @Override
+    public void setX(double posX) {
+        double delta = posX - x;
+        x1 = x1 + delta;
+        x2 = x2 + delta;
+        super.setX(posX);
+    }
+
+    @Override
+    public void setY(double posY) {
+        double delta = posY- y;
+        y1 = y1 + delta;
+        y2 = y2 + delta;
+        super.setY(posY);
     }
 
     public void setX1(double x1) {

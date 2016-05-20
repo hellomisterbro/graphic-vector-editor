@@ -5,6 +5,7 @@ import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 /**
@@ -23,6 +24,21 @@ public class OvalState extends AbstractState {
         super(panel, inspector);
     }
 
+    public void setOval(GVEOval oval) {
+        this.oval = oval;
+        updateUI();
+    }
+
+    public void updateUI(){
+        thickness.setText(String.valueOf(oval.getThickness()));
+        red.setText(String.valueOf(oval.getColor().getRed()));
+        green.setText(String.valueOf(oval.getColor().getGreen()));
+        blue.setText(String.valueOf(oval.getColor().getBlue()));
+        x.setText(String.valueOf((int)oval.getX()));
+        y.setText(String.valueOf((int)oval.getY()));
+        width.setText(String.valueOf((int)oval.getWidth()));
+        height.setText(String.valueOf((int)oval.getWidth()));
+    }
 
 
     @Override
@@ -30,19 +46,13 @@ public class OvalState extends AbstractState {
         super.mousePressed(e);
         oval = new GVEOval(e.getX(), e.getY(), 0, 0);
         this.panel.setTempShape(oval);
+        updateUI();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
-        thickness.setText(String.valueOf(oval.getThickness()));
-        red.setText(String.valueOf(oval.getColor().getRed()));
-        green.setText(String.valueOf(oval.getColor().getGreen()));
-        blue.setText(String.valueOf(oval.getColor().getBlue()));
-        x.setText(String.valueOf(oval.getX()));
-        y.setText(String.valueOf(oval.getY()));
-        width.setText(String.valueOf(oval.getWidth()));
-        height.setText(String.valueOf(oval.getWidth()));
+
     }
 
     @Override
@@ -170,5 +180,20 @@ public class OvalState extends AbstractState {
         inspector.add(colorPanel);
         inspector.add(Box.createRigidArea(new Dimension(20, 20)));
         inspector.add(borderPanel);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

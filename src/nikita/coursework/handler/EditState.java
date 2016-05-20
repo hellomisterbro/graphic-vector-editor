@@ -1,10 +1,11 @@
 package nikita.coursework.handler;
 
-import nikita.coursework.composite.GVERectangle;
-import nikita.coursework.composite.GVEShape;
+import nikita.coursework.composite.*;
 import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class EditState extends AbstractState {
     private List<GVEShape> group;
     private List<GVEShape> copy;
 
+    JButton groupButton, ungoupButton;
+
     private int x, y;
     private int x0, y0;
     private int xf, yf;
@@ -26,11 +29,32 @@ public class EditState extends AbstractState {
     private boolean dragging = false;
     JPanel inspector;
 
-    public EditState(GVEDrawingPanel panel, JPanel inspector) {
+    public EditState(GVEDrawingPanel panel, JPanel inspector, JButton groupButton, JButton ungoupButton) {
         super(panel, inspector);
         this.inspector = inspector;
         this.group = panel.getGroup();
+
+        groupButton.addActionListener(e -> {
+//            GVEComposite comp = new GVEComposite();
+//            for (GVEShape shape: group) {
+//                System.out.println("GROUP BUTTON");
+//                shape.removeFrame();
+//                panel.getPicture().remove(shape);
+//                comp.add(shape);
+//            }
+//            panel.getPicture().add(comp);
+//            comp.setFrame();
+//            group.clear();
+//            panel.repaint();
+
+        });
+
+        ungoupButton.addActionListener(e-> {
+            //TODO: Composite
+        });
+
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -38,25 +62,43 @@ public class EditState extends AbstractState {
         GVEShape gs = panel.selectElement(e.getX(), e.getY());
 
         if (gs != null) {
-//            if (e.isControlDown()) {
-//                group.add(gs);
-//            } else if (e.isAltDown()) {
-//                group.remove(gs);
-//            } else {
-            for (GVEShape g : group)
-                g.removeFrame();
+            if (e.isMetaDown()) {
+                if (!group.contains(gs)) {
+                    group.add(gs);
+                    gs.setFrame();
+                } else {
+                    group.remove(gs);
+                    gs.removeFrame();
+                }
+            } else if (e.isAltDown()) {
+                group.remove(gs);
+                gs.setFrame();
+            } else {
+                for (GVEShape g : group)
+                    g.removeFrame();
                 group.clear();
-            if (gs != null)
-                group.add(gs);
-            gs.setFrame();
-            if (gs instanceof GVERectangle){
-                System.out.println("adf");
-                RectangleState r =  new RectangleState(panel, inspector);
-                r.setRect((GVERectangle) gs);
-                panel.setHandlerState(r);
+                if (gs != null)
+                    group.add(gs);
+                gs.setFrame();
+                if (gs instanceof GVERectangle) {
+                    RectangleState r = new RectangleState(panel, inspector);
+                    r.setRect((GVERectangle) gs);
+                    panel.setHandlerState(r);
+                } else if (gs instanceof GVEOval) {
+                    OvalState r = new OvalState(panel, inspector);
+                    r.setOval((GVEOval) gs);
+                    panel.setHandlerState(r);
+                } else if (gs instanceof GVELine) {
+                    LineState r = new LineState(panel, inspector);
+                    r.setLine((GVELine) gs);
+                    panel.setHandlerState(r);
+                } else if (gs instanceof GVEBrush) {
+                    BrushState r = new BrushState(panel, inspector);
+                    r.setBrush((GVEBrush) gs);
+                    panel.setHandlerState(r);
+                }
             }
         } else {
-
 
             if (!e.isAltDown() && !e.isControlDown()) {
                 for (GVEShape g : group)
@@ -64,6 +106,7 @@ public class EditState extends AbstractState {
                 group.clear();
             }
         }
+
     }
 
 
@@ -113,20 +156,18 @@ public class EditState extends AbstractState {
         }
     }
 
-
     @Override
     public void mouseReleased(MouseEvent e) {
+
         if (dragging) {
             panel.setTempShape(null);
-            panel.getPicture().setCords(x - x0, y - y0);
-            for (GVEShape g : group)
-                g.removeFrame();
             dragging = false;
             copy = null;
         } else if (frameCreation) {
             panel.setFrame(xf, yf, 0, 0);
             frameCreation = false;
         }
+        panel.repaint();
     }
 
     @Override
@@ -135,4 +176,31 @@ public class EditState extends AbstractState {
     }
 
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+
+        if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            for (GVEShape shape : group) {
+                if (panel.getPicture().contains(shape)) {
+                    panel.getPicture().remove(shape);
+                }
+            }
+            for (GVEShape g : group)
+                g.removeFrame();
+            group.clear();
+            panel.setTempShape(null);
+            panel.repaint();
+        }
+    }
 }

@@ -87,7 +87,7 @@ public class GVEFrame extends JFrame {
         JButton ungroup = createTopBarButton("/images/ungroup.png");
         JButton edit = createTopBarButton("/images/edit.png");
         edit.addActionListener(e -> {
-            graphicsPanel.setHandlerState(new EditState(graphicsPanel, inspector));
+            graphicsPanel.setHandlerState(new EditState(graphicsPanel, inspector, group, ungroup));
         });
         JButton brush = createTopBarButton("/images/brush.png");
         brush.addActionListener(e -> {

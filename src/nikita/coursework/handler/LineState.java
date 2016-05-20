@@ -5,6 +5,7 @@ import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
 
@@ -30,6 +31,11 @@ public class LineState extends AbstractState {
         super(panel, inspector);
     }
 
+    public void setLine(GVELine line) {
+        this.line = line;
+        updateUI();
+    }
+
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
@@ -45,15 +51,7 @@ public class LineState extends AbstractState {
         line = (GVELine) this.panel.getTempShape();
         if (line != null && line instanceof GVELine) {
              line.setCords(mousePressedX, mousePressedY, e.getX(), e.getY());
-            positionX1.setText(Integer.toString((int)line.getX1()));
-            positionX2.setText(Integer.toString((int)line.getX2()));
-            positionY1.setText(Integer.toString((int)line.getY1()));
-            positionY2.setText(Integer.toString((int)line.getY2()));
-            thickness.setText(Integer.toString(line.getThickness()));
-            red.setText(Integer.toString(line.getColor().getRed()));
-            green.setText(Integer.toString(line.getColor().getGreen()));
-            blue.setText(Integer.toString(line.getColor().getBlue()));
-            this.panel.repaint();
+           updateUI();
         }
     }
 
@@ -61,6 +59,20 @@ public class LineState extends AbstractState {
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
     }
+
+    public void updateUI(){
+        positionX1.setText(Integer.toString((int)line.getX1()));
+        positionX2.setText(Integer.toString((int)line.getX2()));
+        positionY1.setText(Integer.toString((int)line.getY1()));
+        positionY2.setText(Integer.toString((int)line.getY2()));
+        thickness.setText(Integer.toString(line.getThickness()));
+        red.setText(Integer.toString(line.getColor().getRed()));
+        green.setText(Integer.toString(line.getColor().getGreen()));
+        blue.setText(Integer.toString(line.getColor().getBlue()));
+        this.panel.repaint();
+
+    }
+
 
     @Override
     protected void setInnerElements(JPanel inspector) {
@@ -171,5 +183,20 @@ public class LineState extends AbstractState {
         inspector.add(sizedPanel);
         inspector.add(Box.createRigidArea(new Dimension(20, 20)));
         inspector.add(borderPanel);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

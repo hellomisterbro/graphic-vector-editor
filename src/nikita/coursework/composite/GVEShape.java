@@ -56,7 +56,7 @@ public abstract class GVEShape {
 
 
     public boolean containsPoint(double x, double y) {
-        return (this.x < x &&  x < this.x + width) && (this.y < y &&  y < this.y + height);
+        return (this.x < x  &&  x < this.x + width) && (this.y < y &&  y < this.y + height);
     }
     public Color getColor() {
         return color;

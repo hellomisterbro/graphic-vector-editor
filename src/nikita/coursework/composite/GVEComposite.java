@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author nikita
  */
 public class GVEComposite extends GVEShape {
-    private List<GVEShape> childs = new ArrayList<GVEShape>();
+    private List<GVEShape> childs = new ArrayList<>();
 
     public GVEComposite(){
         super();
@@ -25,10 +25,18 @@ public class GVEComposite extends GVEShape {
 
     public void add(GVEShape child) {
         childs.add(child);
+        setNewProperties();
     }
 
     public void remove(GVEShape child) {
         childs.remove(child);
+        setNewProperties();
+    }
+
+    public boolean contains(GVEShape shape){
+        if (childs.contains(shape))
+            return true;
+        return false;
     }
 
     @Override
@@ -47,5 +55,63 @@ public class GVEComposite extends GVEShape {
     @Override
     public void move(double x, double y) {
 
+    }
+
+    @Override
+    public void setX(double x) {
+            for (GVEShape p : childs) {
+                p.setX(p.getX() - this.x + x);
+            }
+        super.setX(x);
+
+    }
+
+    @Override
+    public void setY(double y) {
+            for (GVEShape p: childs) {
+                p.setY(p.getY() + y - this.y);
+            }
+        super.setY(y);
+    }
+
+    public void setWidth(double width) {
+        for (GVEShape p: childs) {
+               p.setWidth(width);
+            }
+
+        super.setWidth(width);
+    }
+
+
+    public void setHeight(double height) {
+        for (GVEShape p: childs) {
+            p.setHeight(height);
+        }
+
+        super.setHeight(height);
+    }
+
+
+    private void setNewProperties() {
+        double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE;
+        for (GVEShape p : childs) {
+            if (p.getX() < minX)
+                minX = p.getX();
+            if (p.getY() < minY)
+                minY = p.getY();
+            if (p.getX() > maxX)
+                maxX = p.getX();
+            if (p.getY() > maxY)
+                maxY = p.getY();
+        }
+        if (minY != Double.MAX_VALUE)
+            this.y = minY;
+        if (minX != Double.MAX_VALUE)
+            this.x = minX;
+        if (maxX != Double.MIN_VALUE || minX != Double.MAX_VALUE)
+            width = maxX - minX;
+        if (maxY != Double.MIN_VALUE || minY != Double.MAX_VALUE)
+            height = maxY - minY;
     }
 }

@@ -8,6 +8,7 @@ import nikita.coursework.memento.GVEMemento;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
@@ -59,6 +60,10 @@ public class GVEDrawingPanel extends JLayeredPane {
         for (MouseMotionListener ml : getMouseMotionListeners()) {
             removeMouseMotionListener(ml);
         }
+        for (KeyListener ml : getKeyListeners()) {
+            removeKeyListener(ml);
+        }
+        addKeyListener(state);
         addMouseListener(state);
         addMouseMotionListener(state);
     }
@@ -80,6 +85,8 @@ public class GVEDrawingPanel extends JLayeredPane {
     public GVEComposite getPicture(){
         return picture;
     }
+
+
 
 
     public GVEShape getTempShape(){
@@ -117,7 +124,6 @@ public class GVEDrawingPanel extends JLayeredPane {
         group.clear();
         for (GVEShape child : picture.getChilds()) {
             if (frame.contains(child.getX(), child.getY())) {
-                System.out.println("Element has chosen");
                 group.add(child);
             }
         }

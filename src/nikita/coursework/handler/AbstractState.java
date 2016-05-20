@@ -6,6 +6,7 @@ import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -14,15 +15,21 @@ import java.awt.event.MouseEvent;
  *
  * @author nikita
  */
-abstract public class AbstractState extends MouseAdapter {
+abstract public class AbstractState extends MouseAdapter implements KeyListener {
+
     protected GVEDrawingPanel panel;
 
     protected Double mousePressedX, mousePressedY;
 
 
-
     protected AbstractState(GVEDrawingPanel panel, JPanel inspector) {
         this.panel = panel;
+        for (GVEShape shape : panel.getGroup()) {
+            shape.removeFrame();
+        }
+        panel.repaint();
+        panel.getGroup().clear();
+
         setEmptyPanel(inspector);
         setInnerElements(inspector);
         inspector.updateUI();
@@ -31,8 +38,8 @@ abstract public class AbstractState extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
-        this.mousePressedX = (double)e.getX();
-        this.mousePressedY = (double)e.getY();
+        this.mousePressedX = (double) e.getX();
+        this.mousePressedY = (double) e.getY();
     }
 
     @Override
@@ -41,9 +48,9 @@ abstract public class AbstractState extends MouseAdapter {
         GVEShape shape = this.panel.getTempShape();
         if (shape != null) {
             shape.setCords((e.getX() > mousePressedX) ? mousePressedX : e.getX(),
-                           (e.getY() > mousePressedY) ? mousePressedY : e.getY());
+                    (e.getY() > mousePressedY) ? mousePressedY : e.getY());
             shape.setSize(Math.abs(e.getX() - mousePressedX),
-                          Math.abs(e.getY() - mousePressedY));
+                    Math.abs(e.getY() - mousePressedY));
             this.panel.repaint();
         }
     }
@@ -57,7 +64,7 @@ abstract public class AbstractState extends MouseAdapter {
         this.panel.addTempShape();
     }
 
-    protected void setEmptyPanel(JPanel inspector){
+    protected void setEmptyPanel(JPanel inspector) {
         inspector.removeAll();
         inspector.setBackground(GVEFrame.BAR_COLOR);
         inspector.setLayout(new BoxLayout(inspector, BoxLayout.PAGE_AXIS));

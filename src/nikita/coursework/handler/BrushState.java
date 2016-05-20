@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 /**
@@ -26,6 +27,12 @@ public class BrushState extends AbstractState {
         super(panel, inspector);
     }
 
+
+    public void setBrush(GVEBrush brush) {
+        this.brush = brush;
+        updateUI();
+    }
+
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
@@ -39,15 +46,7 @@ public class BrushState extends AbstractState {
     @Override
     public void mouseDragged(MouseEvent e) {
         ((GVEBrush) panel.getTempShape()).add(e.getPoint());
-
-        widthField.setText(Double.toString(brush.getWidth()));
-        heigthField.setText(Double.toString(brush.getHeight()));
-        positionX.setText(Double.toString(brush.getX()));
-        positionY.setText(Double.toString(brush.getY()));
-        radious.setText(Integer.toString(brush.getThickness()));
-        red.setText(String.valueOf(brush.getColor().getRed()));
-        green.setText(String.valueOf(brush.getColor().getGreen()));
-        blue.setText(String.valueOf(brush.getColor().getBlue()));
+        updateUI();
 
         this.panel.repaint();
     }
@@ -58,6 +57,18 @@ public class BrushState extends AbstractState {
 
         panel.addTempShape();
     }
+
+    public void updateUI(){
+        widthField.setText(Integer.toString((int)brush.getWidth()));
+        heigthField.setText(Integer.toString((int)brush.getHeight()));
+        positionX.setText(Integer.toString((int)brush.getX()));
+        positionY.setText(Integer.toString((int)brush.getY()));
+        radious.setText(Integer.toString(brush.getThickness()));
+        red.setText(String.valueOf(brush.getColor().getRed()));
+        green.setText(String.valueOf(brush.getColor().getGreen()));
+        blue.setText(String.valueOf(brush.getColor().getBlue()));
+    }
+
 
     @Override
     protected void setInnerElements(JPanel inspector) {
@@ -168,5 +179,20 @@ public class BrushState extends AbstractState {
         inspector.add(sizedPanel);
         inspector.add(Box.createRigidArea(new Dimension(20, 20)));
         inspector.add(borderPanel);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
