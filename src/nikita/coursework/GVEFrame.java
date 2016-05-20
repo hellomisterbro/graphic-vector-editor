@@ -1,11 +1,19 @@
 package nikita.coursework;
 
 
+import nikita.coursework.command.RedoCommand;
+import nikita.coursework.command.UndoCommand;
+import nikita.coursework.command.graph.CopyCommand;
+import nikita.coursework.command.graph.CutCommand;
+import nikita.coursework.command.graph.DeleteCommand;
+import nikita.coursework.command.graph.PasteCommand;
 import nikita.coursework.handler.*;
+import nikita.coursework.memento.GVECaretaker;
 import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import javax.swing.border.*;
 
 /**
@@ -37,8 +45,9 @@ public class GVEFrame extends JFrame {
     public static final int ZOOM_BAR_ITEM_HIGHT = TOP_BAR_HIGHT - 2*ZOOM_SPACER_HITGHT;
     public static final int ZOOM_BAR_ITEM_WIDTH = (int)(ZOOM_BAR_ITEM_HIGHT* 1.5);
 
-    public GVEDrawingPanel graphicsPanel;
-    public JPanel inspector;
+    private GVEDrawingPanel graphicsPanel;
+    private JPanel inspector;
+    private GVECaretaker caretaker = new GVECaretaker();
 
     public GVEFrame(){
             initUI();
@@ -53,6 +62,7 @@ public class GVEFrame extends JFrame {
         createDrawingPanel();
         createTopBar();
         createRightBar();
+        createKeyBinding();
     }
 
 
@@ -76,7 +86,23 @@ public class GVEFrame extends JFrame {
     }
 
     private void createKeyBinding() {
-        //TODO: Implement key binding, bitch.
+        InputMap inputMap = graphicsPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = graphicsPanel.getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.VK_META), "Undo");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.VK_META), "Redo");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.VK_META), "Copy");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.VK_META), "Cut");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.VK_META), "Paste");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE), "Delete");
+
+
+        actionMap.put("Undo", new UndoCommand(caretaker, graphicsPanel));
+        actionMap.put("Redo", new RedoCommand(caretaker, graphicsPanel));
+        actionMap.put("Delete", new DeleteCommand(graphicsPanel));
+        actionMap.put("Copy", new CopyCommand(graphicsPanel));
+        actionMap.put("Cut", new CutCommand(graphicsPanel));
+        actionMap.put("Paste", new PasteCommand(graphicsPanel));
     }
 
     private void createTopBar() {

@@ -4,6 +4,7 @@ package nikita.coursework.widget;
 import nikita.coursework.composite.GVEComposite;
 import nikita.coursework.composite.GVEShape;
 import nikita.coursework.handler.AbstractState;
+import nikita.coursework.memento.GVECaretaker;
 import nikita.coursework.memento.GVEMemento;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class GVEDrawingPanel extends JLayeredPane {
     private ArrayList<GVEShape> group = new ArrayList<>();
 
     private Rectangle2D.Float frame = new Rectangle2D.Float();
+    private GVECaretaker caretaker;
 
     GVEShape tempShape;
 
@@ -35,21 +37,30 @@ public class GVEDrawingPanel extends JLayeredPane {
      * Memento pattern
      */
 
-
+    private GVEMemento getGPState() {
+        return new GVEMemento((GVEComposite) picture.clone());
+    }
     /**
      * Sets state of this GraphPanel using specified memento.
      *
      * @param memento contains state of GraphPanel.
      */
     public void setGPState(GVEMemento memento) {
-        //TODO: Implement
+        removeAll();
+        picture = memento.getState();
+        group.clear();
+//        for (GraphShape element : graph) {
+//            add(labelHashMap.get(element));
+//            element.notifyObservers();
+//        }
+        repaint();
     }
 
     /**
      * Save state of graph for undoing and redoing.
      */
     public void saveGPState() {
-        //TODO: Implement
+        caretaker.add(getGPState());
     }
 
 
@@ -68,9 +79,6 @@ public class GVEDrawingPanel extends JLayeredPane {
         addMouseMotionListener(state);
     }
 
-    public void selectShape(int x, int y) {
-        //TODO: Implement selecting
-    }
 
     public void addTempShape(){
         if (tempShape != null && !picture.getChilds().contains(this.tempShape)){

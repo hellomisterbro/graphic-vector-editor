@@ -102,10 +102,6 @@ public class GVEBrush extends GVEShape {
         super.setHeight(height);
     }
 
-    @Override
-    public void move(double x, double y) {
-
-    }
 
     @Override
     public GVEShape clone() {

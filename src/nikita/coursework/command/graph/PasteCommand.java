@@ -21,7 +21,7 @@ public class PasteCommand extends AbstractCommand {
     @Override
     public void actionPerformed(ActionEvent e) {
         for (GVEShape element : buffer) {
-            element.move(delta, delta);
+            element.setCords(delta, delta);
             panel.getPicture().add(element);
         }
         buffer = (ArrayList<GVEShape>) buffer.clone();

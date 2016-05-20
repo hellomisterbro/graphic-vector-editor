@@ -52,11 +52,6 @@ public class GVEComposite extends GVEShape {
         return childs;
     }
 
-    @Override
-    public void move(double x, double y) {
-
-    }
-
 
     @Override
     public void setX(double x) {
@@ -104,10 +99,10 @@ public class GVEComposite extends GVEShape {
                 minX = p.getX();
             if (p.getY() < minY)
                 minY = p.getY();
-            if (p.getX() > maxX)
-                maxX = p.getX() + p.width;
-            if (p.getY() > maxY)
-                maxY = p.getY() + p.height;
+            if (p.getX() + p.getWidth() > maxX)
+                maxX = p.getX() + p.getWidth();
+            if (p.getY() + p.getHeight() > maxY)
+                maxY = p.getY() + p.getHeight();
         }
         if (minY != Double.MAX_VALUE)
             this.y = minY;
@@ -121,6 +116,7 @@ public class GVEComposite extends GVEShape {
 
     @Override
     public GVEShape clone() {
-        return null;
+        GVEShape comp = new GVEComposite(x, y, width, height);
+        return comp;
     }
 }

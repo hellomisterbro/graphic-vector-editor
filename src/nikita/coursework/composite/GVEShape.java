@@ -98,8 +98,6 @@ public abstract class GVEShape implements Cloneable {
 
     public abstract void draw(Graphics g);
 
-    public abstract void move(double x, double y);
-
     public double getX() {
         return this.x;
     }

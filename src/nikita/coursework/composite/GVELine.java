@@ -102,10 +102,6 @@ public class GVELine extends GVEShape {
             drawFrame(g);
     }
 
-    @Override
-    public void move(double x, double y) {
-        //TODO: Implement
-    }
 
     @Override
     public GVEShape clone() {
