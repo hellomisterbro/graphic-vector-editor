@@ -69,7 +69,7 @@ public class GVEFrame extends JFrame {
 
     private void createDrawingPanel() {
 
-        graphicsPanel = new GVEDrawingPanel();
+        graphicsPanel = new GVEDrawingPanel(caretaker);
 
         graphicsPanel.setBackground(DRAWING_PANEL_COLOR);
 
@@ -89,13 +89,12 @@ public class GVEFrame extends JFrame {
         InputMap inputMap = graphicsPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = graphicsPanel.getActionMap();
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.VK_META), "Undo");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.VK_META), "Redo");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.VK_META), "Copy");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.VK_META), "Cut");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.VK_META), "Paste");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE), "Delete");
-
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK), "Undo");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK), "Redo");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK), "Copy");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK), "Cut");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK), "Paste");
+        inputMap.put(KeyStroke.getKeyStroke((char) KeyEvent.VK_BACK_SPACE), "Delete");
 
         actionMap.put("Undo", new UndoCommand(caretaker, graphicsPanel));
         actionMap.put("Redo", new RedoCommand(caretaker, graphicsPanel));

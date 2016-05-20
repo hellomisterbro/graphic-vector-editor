@@ -17,11 +17,19 @@ public class DeleteCommand extends AbstractCommand {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("LOL");
         List<GVEShape> group = panel.getGroup();
-        for (GVEShape element : group) {
-            panel.getPicture().remove(element);
-        }
-        group.clear();
+            for (GVEShape shape : group) {
+                if (panel.getPicture().contains(shape)) {
+                    panel.getPicture().remove(shape);
+                }
+            }
+            if (group.contains(panel.getTempShape()))
+                panel.setTempShape(null);
+            for (GVEShape g : group)
+                g.removeFrame();
+            group.clear();
+            panel.repaint();
 
         super.actionPerformed(e);
     }

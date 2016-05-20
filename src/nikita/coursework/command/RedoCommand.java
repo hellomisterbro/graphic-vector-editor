@@ -16,6 +16,7 @@ public class RedoCommand extends AbstractCommand {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.print("REDO");
         panel.setGPState(caretaker.redo());
     }
 

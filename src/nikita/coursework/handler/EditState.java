@@ -1,10 +1,12 @@
 package nikita.coursework.handler;
 
+import nikita.coursework.command.MoveCommand;
 import nikita.coursework.composite.*;
 import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -180,7 +182,9 @@ public class EditState extends AbstractState {
     public void mouseReleased(MouseEvent e) {
 
         if (dragging) {
-            panel.setTempShape(null);
+            //panel.setTempShape(null);
+//            MoveCommand move = new MoveCommand(panel, null);
+//            move.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_LAST, ""));
             dragging = false;
             copy = null;
         } else if (frameCreation) {
@@ -191,36 +195,6 @@ public class EditState extends AbstractState {
     }
 
     @Override
-    protected void setInnerElements(JPanel inspector) {
+    protected void setInnerElements(JPanel inspector) {}
 
-    }
-
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-
-        if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            for (GVEShape shape : group) {
-                if (panel.getPicture().contains(shape)) {
-                    panel.getPicture().remove(shape);
-                }
-            }
-            for (GVEShape g : group)
-                g.removeFrame();
-            group.clear();
-            panel.setTempShape(null);
-            panel.repaint();
-        }
-    }
 }

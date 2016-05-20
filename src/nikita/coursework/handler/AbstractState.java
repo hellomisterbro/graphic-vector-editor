@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
  *
  * @author nikita
  */
-abstract public class AbstractState extends MouseAdapter implements KeyListener {
+abstract public class AbstractState extends MouseAdapter {
 
     protected GVEDrawingPanel panel;
 

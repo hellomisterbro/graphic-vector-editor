@@ -18,6 +18,7 @@ public class UndoCommand extends AbstractCommand {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.print("UNDO");
         panel.setGPState(caretaker.undo());
     }
 

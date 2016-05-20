@@ -37,6 +37,11 @@ public class GVEDrawingPanel extends JLayeredPane {
      * Memento pattern
      */
 
+    public GVEDrawingPanel(GVECaretaker caretaker){
+        this.caretaker = caretaker;
+        saveGPState();
+    }
+
     private GVEMemento getGPState() {
         return new GVEMemento((GVEComposite) picture.clone());
     }
@@ -71,10 +76,7 @@ public class GVEDrawingPanel extends JLayeredPane {
         for (MouseMotionListener ml : getMouseMotionListeners()) {
             removeMouseMotionListener(ml);
         }
-        for (KeyListener ml : getKeyListeners()) {
-            removeKeyListener(ml);
-        }
-        addKeyListener(state);
+
         addMouseListener(state);
         addMouseMotionListener(state);
     }

@@ -22,6 +22,7 @@ public class CutCommand extends AbstractCommand {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.print("CUT");
         copyCommand.actionPerformed(e);
         deleteCommand.actionPerformed(e);
     }

@@ -23,7 +23,9 @@ public class MoveCommand extends AbstractCommand {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        shape.setCords(dx, dy);
+        if (shape != null) {
+            shape.setCords(dx, dy);
+        }
         super.actionPerformed(e);
     }
 }

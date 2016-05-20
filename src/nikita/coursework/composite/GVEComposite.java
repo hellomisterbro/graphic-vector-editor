@@ -55,8 +55,10 @@ public class GVEComposite extends GVEShape {
 
     @Override
     public void setX(double x) {
+        if (!childs.isEmpty())
             for (GVEShape p : childs) {
-                p.setX(p.getX() - this.x + x);
+                if (p!=null)
+                    p.setX(p.getX() - this.x + x);
             }
         super.setX(x);
 
@@ -64,14 +66,17 @@ public class GVEComposite extends GVEShape {
 
     @Override
     public void setY(double y) {
+        if (!childs.isEmpty())
             for (GVEShape p: childs) {
-                p.setY(p.getY() + y - this.y);
+                if (p!=null)
+                    p.setY(p.getY() + y - this.y);
             }
         super.setY(y);
     }
 
     public void setWidth(double width) {
-        if (this.width != 0)
+
+
         for (GVEShape p : childs) {
             p.setWidth(p.width*(this.width/width));
 
@@ -81,7 +86,6 @@ public class GVEComposite extends GVEShape {
 
 
     public void setHeight(double height) {
-        if (this.height != 0)
         for (GVEShape p : childs) {
             p.setWidth(p.height*(this.height/height));
 
@@ -116,7 +120,10 @@ public class GVEComposite extends GVEShape {
 
     @Override
     public GVEShape clone() {
-        GVEShape comp = new GVEComposite(x, y, width, height);
+        GVEComposite comp = new GVEComposite();
+        for (GVEShape shape: childs){
+            comp.add(shape);
+        }
         return comp;
     }
 }

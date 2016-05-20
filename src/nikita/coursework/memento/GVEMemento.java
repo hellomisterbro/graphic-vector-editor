@@ -2,8 +2,6 @@ package nikita.coursework.memento;
 
 import nikita.coursework.composite.GVEComposite;
 
-import java.awt.*;
-
 /**
  * Created by nikita on 11.05.16.
  *

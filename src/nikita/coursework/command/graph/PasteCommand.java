@@ -20,6 +20,7 @@ public class PasteCommand extends AbstractCommand {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.print("PASTE");
         for (GVEShape element : buffer) {
             element.setCords(delta, delta);
             panel.getPicture().add(element);
