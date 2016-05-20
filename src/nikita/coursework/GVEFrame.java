@@ -12,9 +12,9 @@ import nikita.coursework.memento.GVECaretaker;
 import nikita.coursework.widget.GVEDrawingPanel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import javax.swing.border.*;
 
 /**
  * Created by nikita on 10.05.16.
@@ -108,32 +108,32 @@ public class GVEFrame extends JFrame {
         /**
          *  Initialization of buttons
          */
-        JButton group = createTopBarButton("/images/group.png");
-        JButton ungroup = createTopBarButton("/images/ungroup.png");
-        JButton edit = createTopBarButton("/images/edit.png");
+        JButton group = createTopBarButton("images/group.png");
+        JButton ungroup = createTopBarButton("images/ungroup.png");
+        JButton edit = createTopBarButton("images/edit.png");
         edit.addActionListener(e -> {
             graphicsPanel.setHandlerState(new EditState(graphicsPanel, inspector, group, ungroup));
         });
-        JButton brush = createTopBarButton("/images/brush.png");
+        JButton brush = createTopBarButton("images/brush.png");
         brush.addActionListener(e -> {
             graphicsPanel.setHandlerState(new BrushState(graphicsPanel, inspector));
         });
-        JButton line = createTopBarButton("/images/line.png");
+        JButton line = createTopBarButton("images/line.png");
         line.addActionListener(e -> {
             graphicsPanel.setHandlerState(new LineState(graphicsPanel, inspector));
         });
-        JButton rectangle = createTopBarButton("/images/rectangle.png");
+        JButton rectangle = createTopBarButton("images/rectangle.png");
         rectangle.addActionListener(e -> {
             graphicsPanel.setHandlerState(new RectangleState(graphicsPanel, inspector));
         });
-        JButton oval = createTopBarButton("/images/oval.png");
+        JButton oval = createTopBarButton("images/oval.png");
         oval.addActionListener(e -> {
             graphicsPanel.setHandlerState(new OvalState(graphicsPanel, inspector));
         });
 
 
-        JButton zoomPlus = createZoomBarButton("/images/zoomplus.png");
-        JButton zoomMinus = createZoomBarButton("/images/zoomminus.png");
+        JButton zoomPlus = createZoomBarButton("images/zoomplus.png");
+        JButton zoomMinus = createZoomBarButton("images/zoomminus.png");
 
         /**
          *  Initialization of panel
@@ -300,7 +300,7 @@ public class GVEFrame extends JFrame {
     }
 
     private ImageIcon createImageIcon(String path, String description, int width, int height) {
-        java.net.URL imgURL = getClass().getResource(path);
+        java.net.URL imgURL = getClass().getClassLoader().getResource(path);
         if (imgURL != null) {
             ImageIcon icon = new ImageIcon(imgURL, description);
             Image img = icon.getImage();
